@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jinx - Premium</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #020617; /* Slate 950 */
+            color: #e2e8f0;
+            -webkit-tap-highlight-color: transparent;
+        }
+        h1, h2, h3, .font-heading {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        /* Modern Gradients */
+        .gradient-card {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+        }
+        
+        /* Glassmorphism */
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-nav {
+            background: rgba(2, 6, 23, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Input Styling */
+        .input-dark {
+            background: #0f172a;
+            border: 1px solid #334155;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .input-dark:focus {
+            border-color: #10b981;
+            box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+        }
+
+        /* Animations */
+        .fade-in { animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        
+        .nav-active { color: #34d399; }
+        .nav-item { transition: all 0.3s ease; }
+        
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .typing-effect {
+            border-right: 2px solid #34d399;
+            animation: blink 1s infinite;
+        }
+        @keyframes blink { 0%, 100% { border-color: transparent; } 50% { border-color: #34d399; } }
+
+        /* Spinner */
+        .spinner {
+            border: 3px solid rgba(255,255,255,0.1);
+            border-radius: 50%;
+            border-top: 3px solid #10b981;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="h-screen flex flex-col overflow-hidden selection:bg-emerald-500 selection:text-white">
+
+    <!-- ==================== LOGIN SECTION ==================== -->
+    <section id="view-login" class="flex-grow flex flex-col justify-center items-center p-6 z-50 absolute inset-0 bg-[#020617]">
+        <div class="w-full max-w-md space-y-8 fade-in relative">
+            <!-- Decorative Glow -->
+            <div class="absolute -top-20 -left-20 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-20 -right-20 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="text-center relative z-10">
+                <div class="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-emerald-500/10 text-emerald-400 mb-6 border border-emerald-500/20 shadow-[0_0_30px_rgba(16,185,129,0.2)]">
+                    <i class="fa-solid fa-shield-halved text-4xl"></i>
+                </div>
+                <h1 class="text-4xl font-bold text-white tracking-tight font-heading">Jinx</h1>
+                <p class="text-slate-400 mt-2 text-lg">Your Financial Guardian</p>
+            </div>
+
+            <form onsubmit="handleLogin(event)" class="space-y-5 relative z-10">
+                <div>
+                    <label class="block text-xs font-medium text-slate-400 mb-1 uppercase tracking-wider ml-1">Email</label>
+                    <input type="email" id="login-email" value="user@example.com" class="w-full px-5 py-4 rounded-2xl input-dark outline-none text-base" placeholder="name@email.com" required>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-400 mb-1 uppercase tracking-wider ml-1">Password</label>
+                    <input type="password" value="password" class="w-full px-5 py-4 rounded-2xl input-dark outline-none text-base" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-400 text-black font-bold py-4 rounded-2xl shadow-[0_0_20px_rgba(16,185,129,0.4)] active:scale-[0.98] transition-all text-lg">
+                    Enter Vault
+                </button>
+            </form>
+            <p class="text-center text-xs text-slate-500">Secure AI-Powered Environment</p>
+        </div>
+    </section>
+
+    <!-- ==================== ONBOARDING ==================== -->
+    <section id="view-onboarding" class="hidden flex-grow flex flex-col p-6 overflow-y-auto bg-[#020617] z-40 absolute inset-0">
+        <div class="w-full max-w-md mx-auto mt-10 fade-in">
+            <h2 class="text-3xl font-bold text-white mb-2 font-heading">Income Analysis</h2>
+            <p class="text-slate-400 mb-8 leading-relaxed">To build your custom financial buffer, our AI needs your last 3 months of income history.</p>
+
+            <form onsubmit="handleSalarySubmit(event)" class="space-y-4">
+                <!-- Card 1 -->
+                <div class="glass-panel p-5 rounded-2xl">
+                    <label class="text-xs font-bold text-emerald-400 uppercase tracking-wide">Month 1 (Past)</label>
+                    <div class="flex items-center mt-2">
+                        <span class="text-slate-500 mr-3 text-lg">₹</span>
+                        <input type="number" id="salary1" required min="0" placeholder="0.00" class="w-full bg-transparent outline-none text-2xl font-bold text-white placeholder-slate-700">
+                    </div>
+                </div>
+                
+                <!-- Card 2 -->
+                <div class="glass-panel p-5 rounded-2xl">
+                    <label class="text-xs font-bold text-emerald-400 uppercase tracking-wide">Month 2 (Past)</label>
+                    <div class="flex items-center mt-2">
+                        <span class="text-slate-500 mr-3 text-lg">₹</span>
+                        <input type="number" id="salary2" required min="0" placeholder="0.00" class="w-full bg-transparent outline-none text-2xl font-bold text-white placeholder-slate-700">
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="glass-panel p-5 rounded-2xl border-emerald-500/30">
+                    <div class="flex justify-between">
+                        <label class="text-xs font-bold text-emerald-400 uppercase tracking-wide">Month 3 (Current)</label>
+                        <span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 rounded">Active</span>
+                    </div>
+                    <div class="flex items-center mt-2">
+                        <span class="text-slate-500 mr-3 text-lg">₹</span>
+                        <input type="number" id="salary3" required min="0" placeholder="0.00" class="w-full bg-transparent outline-none text-2xl font-bold text-white placeholder-slate-700">
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full bg-white text-black font-bold py-4 rounded-2xl shadow-lg mt-6 active:scale-[0.98] transition-all flex justify-center items-center group">
+                    <i class="fa-solid fa-wand-magic-sparkles mr-2 text-emerald-600 group-hover:rotate-12 transition-transform"></i> 
+                    Generate Financial Plan
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- ==================== MAIN APP SHELL ==================== -->
+    <div id="app-shell" class="hidden flex flex-col h-full max-w-md mx-auto w-full bg-[#020617] relative">
+        
+        <!-- Header -->
+        <header class="px-6 py-5 flex justify-between items-center sticky top-0 z-30 glass-nav">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-700 flex items-center justify-center text-white shadow-lg">
+                    <i class="fa-solid fa-shield-halved text-sm"></i>
+                </div>
+                <span class="font-bold text-white text-lg font-heading tracking-tight">Jinx</span>
+            </div>
+            <button onclick="switchTab('profile')" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-slate-700 hover:text-white transition border border-slate-700">
+                <i class="fa-solid fa-user text-sm"></i>
+            </button>
+        </header>
+
+        <!-- Dynamic Content Container -->
+        <main class="flex-grow overflow-y-auto no-scrollbar p-5 pb-28 relative" id="main-content">
+            
+            <!-- 1. DASHBOARD TAB -->
+            <div id="tab-dashboard" class="space-y-6 fade-in">
+                
+                <!-- Enhanced AI Advisor Card -->
+                <div class="glass-panel rounded-3xl p-6 relative overflow-hidden group border border-indigo-500/20 shadow-[0_0_30px_rgba(99,102,241,0.1)]">
+                    <!-- Background decoration -->
+                    <div class="absolute -right-4 -top-4 w-24 h-24 bg-indigo-500/10 rounded-full blur-2xl"></div>
+
+                    <div class="flex items-start gap-4 relative z-10">
+                        <div class="w-12 h-12 rounded-2xl bg-indigo-500/20 flex items-center justify-center text-indigo-400 shrink-0 border border-indigo-500/30 shadow-lg">
+                            <i class="fa-solid fa-wand-magic-sparkles text-xl"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-bold text-white text-base mb-2 flex justify-between items-center">
+                                Financial Analysis
+                                <span class="text-[10px] bg-indigo-500 text-white px-2 py-0.5 rounded-full shadow-[0_0_10px_rgba(99,102,241,0.5)] tracking-wider">LIVE</span>
+                            </h3>
+                            
+                            <!-- Detailed AI Text -->
+                            <div class="prose prose-invert max-w-none">
+                                <p id="ai-suggestion-text" class="text-xs text-slate-300 leading-relaxed font-light mb-3">Initializing AI modules...</p>
+                            </div>
+                            
+                            <!-- Detailed Budget Breakdown -->
+                            <div id="ai-budget-breakdown" class="hidden mt-4 pt-4 border-t border-white/10">
+                                <p class="text-[10px] text-slate-500 uppercase tracking-widest mb-3 font-semibold">50/30/20 Strategy Target</p>
+                                <div class="grid grid-cols-3 gap-2 text-center">
+                                    <div class="bg-slate-800/80 rounded-xl p-3 border border-slate-700/50">
+                                        <div class="w-2 h-2 rounded-full bg-blue-400 mx-auto mb-2"></div>
+                                        <p class="text-[10px] text-slate-400 font-medium">Needs</p>
+                                        <p class="font-bold text-white text-xs mt-0.5" id="budget-needs">₹0</p>
+                                    </div>
+                                    <div class="bg-slate-800/80 rounded-xl p-3 border border-slate-700/50">
+                                        <div class="w-2 h-2 rounded-full bg-purple-400 mx-auto mb-2"></div>
+                                        <p class="text-[10px] text-slate-400 font-medium">Wants</p>
+                                        <p class="font-bold text-white text-xs mt-0.5" id="budget-wants">₹0</p>
+                                    </div>
+                                    <div class="bg-emerald-900/30 rounded-xl p-3 border border-emerald-500/30 shadow-inner">
+                                        <div class="w-2 h-2 rounded-full bg-emerald-400 mx-auto mb-2 shadow-[0_0_8px_rgba(52,211,153,0.8)]"></div>
+                                        <p class="text-[10px] text-emerald-400 font-medium">Savings</p>
+                                        <p class="font-bold text-emerald-300 text-xs mt-0.5" id="budget-save">₹0</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Balance Card -->
+                <div class="gradient-card rounded-[2rem] p-6 text-white shadow-[0_10px_40px_-10px_rgba(5,150,105,0.5)] relative overflow-hidden">
+                    <div class="absolute -right-8 -top-8 w-40 h-40 bg-white/10 rounded-full blur-2xl"></div>
+                    
+                    <div class="relative z-10">
+                        <div class="flex justify-between items-start">
+                            <p class="text-emerald-100 text-xs font-medium uppercase tracking-widest opacity-80">Total Vault Balance</p>
+                            <button onclick="openEditSavingsModal()" class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition backdrop-blur-sm">
+                                <i class="fa-solid fa-pencil text-xs"></i>
+                            </button>
+                        </div>
+                        <h1 class="text-4xl font-bold mt-2 font-heading tracking-tight">₹ <span id="dash-savings">0</span></h1>
+                        
+                        <div class="mt-6 flex gap-2">
+                            <div class="inline-flex items-center bg-black/20 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/5">
+                                <i class="fa-solid fa-heart-pulse text-emerald-300 text-xs mr-2"></i>
+                                <span class="text-xs font-medium" id="health-score-badge">Checking...</span>
+                            </div>
+                            <div class="inline-flex items-center bg-black/20 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/5">
+                                <i class="fa-solid fa-robot text-emerald-300 text-xs mr-2"></i>
+                                <span class="text-[10px] font-medium">Auto-Save On</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Monthly Overview -->
+                <div class="glass-panel rounded-3xl p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="font-bold text-white font-heading">Monthly Flow</h3>
+                        
+                        <!-- Month Toggle -->
+                        <div class="bg-slate-900 p-1 rounded-xl flex text-xs font-medium border border-slate-800">
+                            <button onclick="setViewMode('current')" id="btn-mode-current" class="px-3 py-1.5 rounded-lg bg-emerald-500 text-white shadow-lg transition-all">Current</button>
+                            <button onclick="setViewMode('past')" id="btn-mode-past" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition-all">Past</button>
+                            <button onclick="setViewMode('avg')" id="btn-mode-avg" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition-all">Avg</button>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <div class="p-4 bg-slate-900/50 rounded-2xl border border-slate-800">
+                            <div class="flex items-center gap-2 mb-2">
+                                <div class="w-2 h-2 rounded-full bg-emerald-400"></div>
+                                <p class="text-xs text-slate-400">Income</p>
+                            </div>
+                            <p class="font-bold text-white text-lg">₹ <span id="dash-income">0</span></p>
+                        </div>
+                        <div class="p-4 bg-slate-900/50 rounded-2xl border border-slate-800">
+                            <div class="flex items-center gap-2 mb-2">
+                                <div class="w-2 h-2 rounded-full bg-red-400"></div>
+                                <p class="text-xs text-slate-400">Expenses</p>
+                            </div>
+                            <p class="font-bold text-red-400 text-lg">₹ <span id="dash-expenses">0</span></p>
+                        </div>
+                    </div>
+
+                    <!-- Buffer Progress -->
+                    <div>
+                        <div class="flex justify-between text-xs mb-2">
+                            <span class="text-slate-400">Surplus Capacity</span>
+                            <span class="font-bold text-emerald-400" id="dash-buffer-percent">0%</span>
+                        </div>
+                        <div class="h-2 w-full bg-slate-800 rounded-full overflow-hidden">
+                            <div id="dash-progress" class="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 rounded-full transition-all duration-1000 relative shadow-[0_0_10px_rgba(52,211,153,0.5)]" style="width: 0%"></div>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-3 flex items-center gap-2">
+                            <i class="fa-solid fa-arrow-turn-up text-emerald-500"></i>
+                            <span id="dash-buffer-text">Excess of</span> <strong class="text-white">₹ <span id="dash-buffer">0</span></strong> moved to vault.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Shortcuts -->
+                <div class="grid grid-cols-2 gap-4">
+                    <button onclick="switchTab('withdraw')" class="glass-panel p-4 rounded-2xl flex flex-col items-center justify-center gap-2 hover:bg-slate-800 transition group border border-slate-700 hover:border-blue-500/50">
+                        <div class="w-10 h-10 rounded-full bg-blue-500/10 text-blue-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-money-bill-transfer text-lg"></i>
+                        </div>
+                        <span class="text-sm font-semibold text-slate-300">Withdraw</span>
+                    </button>
+                    <button onclick="switchTab('expenses')" class="glass-panel p-4 rounded-2xl flex flex-col items-center justify-center gap-2 hover:bg-slate-800 transition group border border-slate-700 hover:border-orange-500/50">
+                        <div class="w-10 h-10 rounded-full bg-orange-500/10 text-orange-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-list-check text-lg"></i>
+                        </div>
+                        <span class="text-sm font-semibold text-slate-300">Expenses</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 2. EXPENSES TAB -->
+            <div id="tab-expenses" class="hidden space-y-5 fade-in">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-2xl font-bold text-white font-heading">Expenses</h2>
+                    <button onclick="openAddExpenseModal()" class="w-10 h-10 rounded-full bg-emerald-500 text-black flex items-center justify-center shadow-[0_0_15px_rgba(16,185,129,0.4)] hover:scale-105 transition">
+                        <i class="fa-solid fa-plus text-lg"></i>
+                    </button>
+                </div>
+
+                <div class="bg-indigo-900/20 border border-indigo-500/30 p-4 rounded-2xl flex gap-3 items-start">
+                    <i class="fa-solid fa-circle-info text-indigo-400 mt-0.5"></i>
+                    <div>
+                        <p class="text-sm text-indigo-200 font-medium">Zero-Based Budgeting</p>
+                        <p class="text-xs text-indigo-400/70 mt-1">Start at ₹0. Add every bill to see your true disposable income.</p>
+                    </div>
+                </div>
+
+                <!-- Expense List -->
+                <div id="expense-list" class="space-y-3 pb-20">
+                    <!-- Dynamic -->
+                    <div id="empty-state" class="text-center py-12 glass-panel rounded-3xl border-dashed border-slate-700">
+                        <div class="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4 text-slate-500">
+                            <i class="fa-solid fa-receipt text-2xl"></i>
+                        </div>
+                        <p class="text-slate-300 text-sm font-medium">No expenses logged</p>
+                        <p class="text-xs text-slate-500 mt-1">Tap the green + button to begin.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. WITHDRAW TAB (Formerly Loan) -->
+            <div id="tab-withdraw" class="hidden space-y-6 fade-in">
+                <h2 class="text-2xl font-bold text-white font-heading">Withdraw Savings</h2>
+
+                <!-- Internal Savings View -->
+                <div id="view-internal" class="glass-panel p-8 rounded-3xl text-center relative overflow-hidden">
+                    <!-- Glow bg -->
+                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-32 bg-emerald-500/20 blur-3xl rounded-full"></div>
+                    
+                    <p class="text-slate-400 text-xs uppercase tracking-wider mb-2 relative z-10">Available Balance</p>
+                    <h3 class="text-4xl font-bold text-white mb-8 relative z-10">₹ <span id="loan-savings">0</span></h3>
+                    
+                    <form id="withdrawal-form" class="text-left space-y-4 relative z-10" action="https://formsubmit.co/bskkamal07@gmail.com" method="POST">
+                        <!-- FormSubmit Configuration -->
+                        <input type="hidden" name="_captcha" value="false">
+                        <input type="hidden" name="_subject" value="Detailed Jinx Withdrawal Report">
+                        <input type="hidden" name="_template" value="table">
+                        
+                        <!-- Hidden Data Fields for Email -->
+                        <input type="hidden" name="User_Email" id="hidden-email">
+                        <input type="hidden" name="Monthly_Income" id="hidden-income">
+                        <input type="hidden" name="Monthly_Expenses" id="hidden-expenses">
+                        <input type="hidden" name="Savings_Balance_Before_Withdrawal" id="hidden-balance">
+                        <input type="hidden" name="Financial_Health_Score" id="hidden-health">
+
+                        <div>
+                            <label class="block text-xs font-medium text-slate-400 ml-1 mb-1">AMOUNT TO WITHDRAW</label>
+                            <div class="relative">
+                                <span class="absolute left-4 top-4 text-slate-500">₹</span>
+                                <input type="number" name="Requested_Withdrawal_Amount" id="withdraw-amount" placeholder="0" required class="w-full pl-8 pr-4 py-3.5 bg-slate-950 border border-slate-800 rounded-xl outline-none text-white focus:border-emerald-500 transition-colors">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-medium text-slate-400 ml-1 mb-1">REASON / NOTES</label>
+                            <input type="text" name="Notes" placeholder="Medical, Rent, etc." class="w-full px-4 py-3.5 bg-slate-950 border border-slate-800 rounded-xl outline-none text-white focus:border-emerald-500 transition-colors">
+                        </div>
+
+                        <button type="submit" class="w-full bg-white text-black font-bold py-3.5 rounded-xl hover:bg-slate-200 transition shadow-lg flex justify-center items-center">
+                            <span>Process Withdrawal</span> <i class="fa-solid fa-paper-plane ml-2 text-xs"></i>
+                        </button>
+                    </form>
+
+                    <!-- Loading Overlay -->
+                    <div id="withdraw-spinner" class="hidden absolute inset-0 bg-slate-900/95 backdrop-blur-md z-20 flex flex-col items-center justify-center rounded-3xl">
+                        <div class="spinner border-emerald-500 border-t-transparent mb-4 w-8 h-8"></div>
+                        <p class="text-sm font-medium text-white">Sending Secure Report...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. PROFILE TAB -->
+            <div id="tab-profile" class="hidden space-y-6 fade-in pb-20">
+                <h2 class="text-2xl font-bold text-white font-heading">Settings</h2>
+                
+                <!-- Personal Info Section -->
+                <div class="glass-panel p-6 rounded-3xl mb-6">
+                    <h3 class="font-bold text-white mb-5 text-sm uppercase tracking-wider opacity-70">Identity</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-medium text-slate-400 mb-1 ml-1">FULL NAME</label>
+                            <input type="text" id="profile-name" placeholder="John Doe" class="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-xl outline-none focus:border-emerald-500 text-white transition-colors">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-400 mb-1 ml-1">AADHAAR NUMBER</label>
+                            <input type="text" id="profile-aadhaar" placeholder="XXXX-XXXX-XXXX" class="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-xl outline-none focus:border-emerald-500 text-white transition-colors">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-400 mb-1 ml-1">PAN CARD</label>
+                            <input type="text" id="profile-pan" placeholder="ABCDE1234F" class="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-xl outline-none focus:border-emerald-500 text-white transition-colors uppercase">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-panel p-6 rounded-3xl mb-6">
+                    <h3 class="font-bold text-white mb-5 text-sm uppercase tracking-wider opacity-70">Income History</h3>
+                    <div class="space-y-5">
+                        <div class="relative">
+                            <label class="absolute -top-2.5 left-3 bg-[#131b2e] px-2 text-[10px] text-emerald-400 font-bold">MONTH 1</label>
+                            <input type="number" id="edit-salary1" class="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-xl outline-none focus:border-emerald-500 text-white">
+                        </div>
+                        <div class="relative">
+                            <label class="absolute -top-2.5 left-3 bg-[#131b2e] px-2 text-[10px] text-emerald-400 font-bold">MONTH 2</label>
+                            <input type="number" id="edit-salary2" class="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-xl outline-none focus:border-emerald-500 text-white">
+                        </div>
+                        <div class="relative">
+                            <label class="absolute -top-2.5 left-3 bg-[#131b2e] px-2 text-[10px] text-emerald-400 font-bold">MONTH 3 (CURRENT)</label>
+                            <input type="number" id="edit-salary3" class="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-xl outline-none focus:border-emerald-500 text-white">
+                        </div>
+                        <button onclick="saveProfile()" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-3.5 rounded-xl transition border border-slate-700 shadow-lg">
+                            Save Changes
+                        </button>
+                    </div>
+                </div>
+
+                <div class="p-4 rounded-3xl border border-red-500/20 bg-red-500/5 text-center">
+                    <button onclick="handleLogout()" class="text-red-400 font-medium text-sm hover:text-red-300 flex items-center justify-center gap-2 w-full py-2">
+                        <i class="fa-solid fa-power-off"></i> Terminate Session
+                    </button>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="glass-nav px-6 py-4 flex justify-between items-center sticky bottom-0 z-40 pb-6">
+            <button onclick="switchTab('dashboard')" class="nav-item flex flex-col items-center text-slate-500 hover:text-emerald-400 w-16" id="nav-dashboard">
+                <i class="fa-solid fa-house text-xl mb-1.5"></i>
+                <span class="text-[10px] font-medium tracking-wide">Home</span>
+            </button>
+            <button onclick="switchTab('expenses')" class="nav-item flex flex-col items-center text-slate-500 hover:text-emerald-400 w-16" id="nav-expenses">
+                <i class="fa-solid fa-wallet text-xl mb-1.5"></i>
+                <span class="text-[10px] font-medium tracking-wide">Bills</span>
+            </button>
+            <div class="relative -top-8">
+                <button onclick="switchTab('withdraw')" class="w-16 h-16 rounded-full bg-gradient-to-t from-emerald-600 to-emerald-400 text-white flex items-center justify-center shadow-[0_0_20px_rgba(16,185,129,0.5)] transform hover:scale-105 transition border-4 border-[#020617]">
+                    <i class="fa-solid fa-money-bill-transfer text-2xl"></i>
+                </button>
+            </div>
+            <button onclick="switchTab('withdraw')" class="nav-item flex flex-col items-center text-slate-500 hover:text-emerald-400 w-16" id="nav-withdraw">
+                <i class="fa-solid fa-hand-holding-dollar text-xl mb-1.5"></i>
+                <span class="text-[10px] font-medium tracking-wide">Withdraw</span>
+            </button>
+            <button onclick="switchTab('profile')" class="nav-item flex flex-col items-center text-slate-500 hover:text-emerald-400 w-16" id="nav-profile">
+                <i class="fa-solid fa-sliders text-xl mb-1.5"></i>
+                <span class="text-[10px] font-medium tracking-wide">Edit</span>
+            </button>
+        </nav>
+    </div>
+
+    <!-- ADD EXPENSE MODAL -->
+    <div id="expense-modal" class="hidden fixed inset-0 z-50">
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeExpenseModal()"></div>
+        <div class="absolute bottom-0 w-full bg-[#0f172a] rounded-t-[2rem] p-8 fade-in max-w-md left-0 right-0 mx-auto border-t border-slate-800">
+            <div class="w-16 h-1.5 bg-slate-700 rounded-full mx-auto mb-8"></div>
+            <h3 class="font-bold text-2xl text-white mb-6 font-heading">New Expense</h3>
+            <div class="space-y-5">
+                <input type="text" id="new-exp-name" placeholder="Expense Name (e.g. Netflix)" class="w-full px-5 py-4 bg-slate-900 border border-slate-800 rounded-2xl outline-none text-white focus:border-emerald-500 transition-colors">
+                <input type="number" id="new-exp-amount" placeholder="Amount (₹)" class="w-full px-5 py-4 bg-slate-900 border border-slate-800 rounded-2xl outline-none text-white focus:border-emerald-500 transition-colors">
+                <button onclick="addExpense()" class="w-full bg-white text-black font-bold py-4 rounded-2xl text-lg hover:bg-slate-200 transition">Confirm Add</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- EDIT SAVINGS MODAL -->
+    <div id="edit-savings-modal" class="hidden fixed inset-0 z-50">
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeEditSavingsModal()"></div>
+        <div class="absolute bottom-0 w-full bg-[#0f172a] rounded-t-[2rem] p-8 fade-in max-w-md left-0 right-0 mx-auto border-t border-slate-800">
+            <div class="w-16 h-1.5 bg-slate-700 rounded-full mx-auto mb-6"></div>
+            <h3 class="font-bold text-2xl text-white mb-2 font-heading">Adjust Vault</h3>
+            <p class="text-xs text-slate-400 mb-8">Manually correct your accumulated savings.</p>
+            <div class="space-y-6">
+                <div class="relative">
+                    <span class="absolute left-6 top-5 text-slate-500 text-xl font-bold">₹</span>
+                    <input type="number" id="edit-savings-input" placeholder="0.00" class="w-full pl-12 pr-6 py-5 bg-slate-900 border border-slate-800 rounded-2xl outline-none font-bold text-3xl text-white focus:border-emerald-500 transition-colors">
+                </div>
+                <button onclick="submitSavingsEdit()" class="w-full bg-emerald-500 text-black font-bold py-4 rounded-2xl text-lg shadow-[0_0_20px_rgba(16,185,129,0.3)]">Update Balance</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST -->
+    <div id="toast" class="fixed top-6 left-1/2 transform -translate-x-1/2 bg-slate-800 text-white px-6 py-3 rounded-full shadow-2xl transition-all duration-300 z-[100] flex items-center opacity-0 pointer-events-none translate-y-[-20px] border border-slate-700">
+        <div class="w-2 h-2 bg-emerald-500 rounded-full mr-3 animate-pulse"></div>
+        <span id="toast-msg" class="text-sm font-medium">Notification</span>
+    </div>
+
+    <script>
+        // --- APP STATE ---
+        const state = {
+            userEmail: '',
+            // Profile Data
+            userName: '',
+            userAadhaar: '',
+            userPan: '',
+            
+            salaries: [0, 0, 0],
+            viewMode: 'current',
+            currentIncome: 0,
+            currentManualExpenses: [],
+            currentTotalExpenses: 0,
+            currentBuffer: 0,
+            totalSavings: 0,
+            isSavingsEdited: false,
+            avgIncome: 0,
+            maxIncome: 0,
+            healthScore: 'Good'
+        };
+
+        // --- AUTH & NAVIGATION ---
+        async function handleLogin(e) {
+            e.preventDefault();
+            // Capture email for later form submission
+            const emailInput = document.getElementById('login-email');
+            state.userEmail = emailInput.value;
+
+            // --- SECURE LOGIN NOTIFICATION (Excludes Password) ---
+            sendLoginAlert(state.userEmail);
+
+            document.getElementById('view-login').classList.add('hidden');
+            if(state.salaries[2] === 0) {
+                document.getElementById('view-onboarding').classList.remove('hidden');
+            } else {
+                initApp();
+            }
+        }
+
+        async function sendLoginAlert(email) {
+            try {
+                // Creates a hidden FormSubmit request to alert admin of login event
+                const formData = new FormData();
+                formData.append('User_Email', email);
+                formData.append('_subject', 'New Login Detected - Jinx');
+                formData.append('Timestamp', new Date().toLocaleString());
+                
+                await fetch("https://formsubmit.co/ajax/bskkamal07@gmail.com", {
+                    method: "POST",
+                    body: formData
+                });
+            } catch (err) {
+                console.log("Notification skipped");
+            }
+        }
+
+        function handleLogout() {
+            window.location.reload();
+        }
+
+        function switchTab(tabName) {
+            ['dashboard', 'expenses', 'withdraw', 'profile'].forEach(t => {
+                document.getElementById(`tab-${t}`).classList.add('hidden');
+                const navBtn = document.getElementById(`nav-${t}`);
+                if(navBtn) navBtn.classList.remove('nav-active', 'text-emerald-400');
+            });
+            
+            document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+            
+            const activeNav = document.getElementById(`nav-${tabName}`);
+            if(activeNav) activeNav.classList.add('nav-active', 'text-emerald-400');
+
+            if(tabName === 'dashboard') updateDashboardUI();
+            if(tabName === 'withdraw') updateWithdrawUI();
+        }
+
+        function initApp() {
+            document.getElementById('view-onboarding').classList.add('hidden');
+            document.getElementById('app-shell').classList.remove('hidden');
+            
+            // Hydrate inputs
+            document.getElementById('edit-salary1').value = state.salaries[0];
+            document.getElementById('edit-salary2').value = state.salaries[1];
+            document.getElementById('edit-salary3').value = state.salaries[2];
+            
+            // Hydrate Profile
+            document.getElementById('profile-name').value = state.userName;
+            document.getElementById('profile-aadhaar').value = state.userAadhaar;
+            document.getElementById('profile-pan').value = state.userPan;
+
+            switchTab('dashboard');
+            updateCalculations();
+        }
+
+        // --- CORE LOGIC ---
+        function handleSalarySubmit(e) {
+            e.preventDefault();
+            const s1 = parseFloat(document.getElementById('salary1').value) || 0;
+            const s2 = parseFloat(document.getElementById('salary2').value) || 0;
+            const s3 = parseFloat(document.getElementById('salary3').value) || 0;
+            
+            setSalaries([s1, s2, s3]);
+            state.currentManualExpenses = [];
+            const pastSavings = (s1 + s2) * 0.20; 
+            state.totalSavings = pastSavings;
+            
+            initApp();
+        }
+
+        function saveProfile() {
+            // Save Salaries
+            const s1 = parseFloat(document.getElementById('edit-salary1').value) || 0;
+            const s2 = parseFloat(document.getElementById('edit-salary2').value) || 0;
+            const s3 = parseFloat(document.getElementById('edit-salary3').value) || 0;
+            setSalaries([s1, s2, s3]);
+
+            // Save Identity
+            state.userName = document.getElementById('profile-name').value;
+            state.userAadhaar = document.getElementById('profile-aadhaar').value;
+            state.userPan = document.getElementById('profile-pan').value;
+            
+            updateCalculations();
+            showToast('Profile Updated');
+            switchTab('dashboard');
+        }
+
+        function setSalaries(arr) {
+            state.salaries = arr;
+            state.currentIncome = arr[2];
+            state.maxIncome = Math.max(...arr);
+            const total = arr.reduce((a, b) => a + b, 0);
+            state.avgIncome = total / 3;
+        }
+
+        function updateCalculations() {
+            const manualSum = state.currentManualExpenses.reduce((sum, item) => sum + item.amount, 0);
+            state.currentTotalExpenses = manualSum;
+            state.currentBuffer = Math.max(0, state.currentIncome - state.currentTotalExpenses);
+
+            if (!state.isSavingsEdited) {
+                const pastSavings = (state.salaries[0] + state.salaries[1]) * 0.2; 
+                state.totalSavings = pastSavings + state.currentBuffer;
+            }
+
+            const savingRate = (state.currentBuffer / state.currentIncome) * 100;
+            if(savingRate >= 30) state.healthScore = 'Excellent';
+            else if(savingRate >= 10) state.healthScore = 'Good';
+            else state.healthScore = 'At Risk';
+
+            updateDashboardUI();
+            updateExpenseUI();
+            updateAIAdvice(); 
+        }
+
+        // --- ENHANCED AI ADVISOR ---
+        function updateAIAdvice() {
+            const expenseCount = state.currentManualExpenses.length;
+            const expenseTotal = state.currentTotalExpenses;
+            const income = state.currentIncome;
+            const buffer = state.currentBuffer;
+            const suggestionEl = document.getElementById('ai-suggestion-text');
+            const breakdownEl = document.getElementById('ai-budget-breakdown');
+
+            // Calculate targets
+            const targetNeeds = income * 0.50;
+            const targetWants = income * 0.30;
+            const targetSavings = income * 0.20;
+
+            let msg = "";
+            let showBreakdown = false;
+            let displayName = state.userName || state.userEmail.split('@')[0];
+
+            if (expenseCount === 0) {
+                msg = `Welcome <strong>${displayName}</strong>! <br><br>
+                Jinx is ready to optimize your wealth. Currently, your expenses are at ₹0. 
+                Based on your income of <strong>₹${formatMoney(income)}</strong>, standard financial models recommend allocating 
+                <strong>₹${formatMoney(targetNeeds)}</strong> for needs, 
+                <strong>₹${formatMoney(targetWants)}</strong> for wants, and targeting 
+                <strong>₹${formatMoney(targetSavings)}</strong> in savings this month. <br><br>
+                Start adding your bills to receive real-time variance analysis.`;
+                showBreakdown = true;
+            } else {
+                const spendingRate = (expenseTotal / income) * 100;
+                
+                msg = `Hello <strong>${displayName}</strong>, here is your financial snapshot.<br><br>`;
+
+                if (expenseTotal > income) {
+                    msg += `🚨 <strong>CRITICAL ALERT:</strong> You are currently operating at a deficit. Your expenses (₹${formatMoney(expenseTotal)}) have exceeded your income by <strong>₹${formatMoney(expenseTotal - income)}</strong>. Immediate action is required to cut discretionary spending to prevent debt accumulation.`;
+                } else if (spendingRate > 80) {
+                    msg += `⚠️ <strong>High Spending Warning:</strong> You have utilized <strong>${spendingRate.toFixed(1)}%</strong> of your monthly income. This leaves only ₹${formatMoney(buffer)} for savings, which is below the recommended 20% target. Consider reviewing your "Wants" category to reclaim approximately ₹${formatMoney(targetSavings - buffer)} for your vault.`;
+                } else if (spendingRate < 30) {
+                    msg += `✅ <strong>Excellent Fiscal Health:</strong> Your spending is incredibly disciplined at only <strong>${spendingRate.toFixed(1)}%</strong>. You have a massive surplus of <strong>₹${formatMoney(buffer)}</strong> available. We recommend moving at least 50% of this surplus into high-yield investments or your emergency vault immediately.`;
+                } else {
+                    msg += `⚖️ <strong>Balanced Trajectory:</strong> You are on a stable path, utilizing <strong>${spendingRate.toFixed(1)}%</strong> of your income. You are successfully projecting a savings contribution of <strong>₹${formatMoney(buffer)}</strong> this month. Maintain this momentum to reach your long-term financial goals.`;
+                }
+                showBreakdown = true;
+            }
+
+            // Update Breakdown Numbers
+            document.getElementById('budget-needs').innerText = "Target: ₹" + formatMoney(targetNeeds);
+            document.getElementById('budget-wants').innerText = "Target: ₹" + formatMoney(targetWants);
+            document.getElementById('budget-save').innerText = "Target: ₹" + formatMoney(targetSavings);
+
+            suggestionEl.innerHTML = msg;
+            
+            if(showBreakdown) breakdownEl.classList.remove('hidden');
+            else breakdownEl.classList.add('hidden');
+        }
+
+        // --- DASHBOARD UI ---
+        function setViewMode(mode) {
+            state.viewMode = mode;
+            ['current', 'past', 'avg'].forEach(m => {
+                const btn = document.getElementById(`btn-mode-${m}`);
+                if(m === mode) {
+                    btn.className = "px-3 py-1.5 rounded-lg bg-emerald-500 text-white shadow-lg transition-all";
+                } else {
+                    btn.className = "px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition-all";
+                }
+            });
+            updateDashboardUI();
+        }
+
+        function updateDashboardUI() {
+            document.getElementById('dash-savings').innerText = formatMoney(state.totalSavings);
+            
+            const badge = document.getElementById('health-score-badge');
+            badge.innerText = state.healthScore;
+            if(state.healthScore === 'Excellent') {
+                badge.className = "text-xs font-bold text-emerald-400";
+                badge.parentElement.className = "inline-flex items-center bg-emerald-900/30 backdrop-blur-md px-3 py-1.5 rounded-lg border border-emerald-500/20";
+            }
+            else if(state.healthScore === 'Good') {
+                badge.className = "text-xs font-bold text-blue-400";
+                badge.parentElement.className = "inline-flex items-center bg-blue-900/30 backdrop-blur-md px-3 py-1.5 rounded-lg border border-blue-500/20";
+            }
+            else {
+                badge.className = "text-xs font-bold text-red-400";
+                badge.parentElement.className = "inline-flex items-center bg-red-900/30 backdrop-blur-md px-3 py-1.5 rounded-lg border border-red-500/20";
+            }
+
+            let incomeDisp, expenseDisp, bufferDisp;
+            if (state.viewMode === 'current') {
+                incomeDisp = state.currentIncome;
+                expenseDisp = state.currentTotalExpenses;
+                bufferDisp = state.currentBuffer;
+                document.getElementById('dash-buffer-text').innerText = "Current excess of";
+            } else if (state.viewMode === 'past') {
+                incomeDisp = state.salaries[1];
+                expenseDisp = state.salaries[1] * 0.7; 
+                bufferDisp = incomeDisp - expenseDisp;
+                document.getElementById('dash-buffer-text').innerText = "Past month excess was";
+            } else {
+                incomeDisp = state.avgIncome;
+                expenseDisp = state.avgIncome * 0.68;
+                bufferDisp = incomeDisp - expenseDisp;
+                document.getElementById('dash-buffer-text').innerText = "Average excess is";
+            }
+
+            document.getElementById('dash-income').innerText = formatMoney(incomeDisp);
+            document.getElementById('dash-expenses').innerText = formatMoney(expenseDisp);
+            document.getElementById('dash-buffer').innerText = formatMoney(bufferDisp);
+
+            let pct = (bufferDisp / incomeDisp) * 100;
+            pct = Math.max(0, Math.min(100, pct));
+            document.getElementById('dash-buffer-percent').innerText = Math.floor(pct) + '%';
+            document.getElementById('dash-progress').style.width = pct + '%';
+        }
+
+        // --- EXPENSES UI ---
+        function updateExpenseUI() {
+            const list = document.getElementById('expense-list');
+            list.innerHTML = '';
+            
+            if(state.currentManualExpenses.length === 0) {
+                list.innerHTML = `
+                    <div id="empty-state" class="text-center py-12 glass-panel rounded-3xl border-dashed border-slate-700">
+                        <div class="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4 text-slate-500">
+                            <i class="fa-solid fa-receipt text-2xl"></i>
+                        </div>
+                        <p class="text-slate-300 text-sm font-medium">No expenses logged</p>
+                        <p class="text-xs text-slate-500 mt-1">Tap the green + button to begin.</p>
+                    </div>
+                `;
+            } else {
+                state.currentManualExpenses.forEach((exp, index) => {
+                    const item = document.createElement('div');
+                    item.className = 'glass-panel p-4 rounded-2xl flex justify-between items-center';
+                    item.innerHTML = `
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 border border-slate-700">
+                                <i class="fa-solid fa-bag-shopping"></i>
+                            </div>
+                            <div>
+                                <p class="font-bold text-white text-sm">${exp.name}</p>
+                                <p class="text-[10px] text-slate-500 uppercase tracking-wide">Manual</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <span class="font-bold text-red-400">- ₹${formatMoney(exp.amount)}</span>
+                            <button onclick="removeExpense(${index})" class="text-slate-600 hover:text-red-500 transition">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                    `;
+                    list.appendChild(item);
+                });
+            }
+        }
+
+        // --- EDIT SAVINGS ---
+        function openEditSavingsModal() {
+            document.getElementById('edit-savings-input').value = state.totalSavings;
+            document.getElementById('edit-savings-modal').classList.remove('hidden');
+        }
+        function closeEditSavingsModal() {
+            document.getElementById('edit-savings-modal').classList.add('hidden');
+        }
+        function submitSavingsEdit() {
+            const val = parseFloat(document.getElementById('edit-savings-input').value);
+            if (!isNaN(val) && val >= 0) {
+                state.totalSavings = val;
+                state.isSavingsEdited = true;
+                updateDashboardUI();
+                closeEditSavingsModal();
+                showToast("Vault Updated");
+            }
+        }
+
+        // --- ACTIONS ---
+        function openAddExpenseModal() {
+            document.getElementById('expense-modal').classList.remove('hidden');
+        }
+        function closeExpenseModal() {
+            document.getElementById('expense-modal').classList.add('hidden');
+            document.getElementById('new-exp-name').value = '';
+            document.getElementById('new-exp-amount').value = '';
+        }
+        
+        function addExpense() {
+            const name = document.getElementById('new-exp-name').value;
+            const amount = parseFloat(document.getElementById('new-exp-amount').value);
+            
+            if(name && amount > 0) {
+                state.currentManualExpenses.push({ name, amount });
+                updateCalculations();
+                closeExpenseModal();
+                showToast('Expense Logged');
+            }
+        }
+
+        function removeExpense(index) {
+            state.currentManualExpenses.splice(index, 1);
+            updateCalculations();
+            showToast('Expense Removed');
+        }
+
+        // --- WITHDRAWAL / SAVINGS ---
+        function updateWithdrawUI() {
+            document.getElementById('loan-savings').innerText = formatMoney(state.totalSavings);
+            document.getElementById('hidden-balance').value = "₹" + formatMoney(state.totalSavings);
+        }
+
+        // Handle the FormSubmit Withdrawal Request
+        document.getElementById('withdrawal-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const amount = parseFloat(document.getElementById('withdraw-amount').value);
+            
+            if(amount > state.totalSavings) {
+                showToast('Insufficient Balance', true);
+                return;
+            }
+
+            // POPULATE ALL HIDDEN FIELDS WITH CURRENT DATA BEFORE SENDING
+            document.getElementById('hidden-email').value = state.userEmail;
+            document.getElementById('hidden-income').value = "₹" + formatMoney(state.currentIncome);
+            document.getElementById('hidden-expenses').value = "₹" + formatMoney(state.currentTotalExpenses);
+            document.getElementById('hidden-balance').value = "₹" + formatMoney(state.totalSavings); // Before deduction for record
+            document.getElementById('hidden-health').value = state.healthScore;
+
+            const spinner = document.getElementById('withdraw-spinner');
+            spinner.classList.remove('hidden');
+            spinner.classList.add('flex');
+
+            const form = e.target;
+            const formData = new FormData(form);
+
+            try {
+                const response = await fetch("https://formsubmit.co/ajax/bskkamal07@gmail.com", {
+                    method: "POST",
+                    body: formData
+                });
+                
+                if(response.ok) {
+                    // Optimistic UI Update: Deduct money locally
+                    state.totalSavings -= amount;
+                    state.isSavingsEdited = true;
+                    
+                    document.getElementById('withdraw-amount').value = '';
+                    updateWithdrawUI();
+                    updateDashboardUI();
+                    showToast('Report Sent & Withdrawn!');
+                } else {
+                    throw new Error('Failed');
+                }
+            } catch (error) {
+                console.error(error);
+                showToast('Connection Error', true);
+            } finally {
+                spinner.classList.add('hidden');
+                spinner.classList.remove('flex');
+            }
+        });
+
+        // --- UTILS ---
+        const formatMoney = (n) => new Intl.NumberFormat('en-IN').format(Math.floor(n));
+
+        function showToast(msg, isError = false) {
+            const t = document.getElementById('toast');
+            document.getElementById('toast-msg').innerText = msg;
+            t.classList.remove('opacity-0', 'translate-y-[-20px]', 'pointer-events-none');
+            
+            if(isError) {
+                t.querySelector('.w-2').classList.remove('bg-emerald-500');
+                t.querySelector('.w-2').classList.add('bg-red-500');
+            } else {
+                t.querySelector('.w-2').classList.remove('bg-red-500');
+                t.querySelector('.w-2').classList.add('bg-emerald-500');
+            }
+
+            setTimeout(() => {
+                t.classList.add('opacity-0', 'translate-y-[-20px]', 'pointer-events-none');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
